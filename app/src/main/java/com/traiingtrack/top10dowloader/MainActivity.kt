@@ -55,20 +55,7 @@ class MainActivity : AppCompatActivity() {
                     val response = connection.responseCode
                     Log.d(TAG, "downloadXML: The respose code was $response")
 
-//            val inputStream = connection.inputStream
-//            val inputStreamReader = InputStreamReader(inputStream)
-//            val reader = BufferedReader(inputStreamReader)
-
-                    val reader = BufferedReader(InputStreamReader(connection.inputStream))
-                    val inputBuffer = CharArray(500)
-                    var charsRead = 0
-                    while (charsRead >= 0) {
-                        charsRead = reader.read(inputBuffer)
-                        if (charsRead > 0) {
-                            xmlResult.append(String(inputBuffer, 0, charsRead))
-                        }
-                    }
-                    reader.close()
+                    connection.inputStream.buffered().reader().use { xmlResult.append(it.readText()) }
 
                     Log.d(TAG, "Received ${xmlResult.length} bytes")
                     return xmlResult.toString()
@@ -86,15 +73,14 @@ class MainActivity : AppCompatActivity() {
 
                 }catch (e: Exception){
                     val TAG = "downloadXML:"
-                    val errorMessage: String
-                    when (e){
-                        is MalformedURLException -> errorMessage = "$TAG  invalid URL ${e.message}"
-                        is IOException -> errorMessage = "$TAG IO Exception reading data ${e.message}"
+                    val errorMessage: String = when (e){
+                        is MalformedURLException -> "$TAG invalid URL ${e.message}"
+                        is IOException -> "$TAG IO Exception reading data ${e.message}"
                         is SecurityException -> {
                             e.printStackTrace()
-                            errorMessage = "$TAG Security Exception. Needs permission ${e.message}"
+                           "$TAG Security Exception. Needs permission ${e.message}"
                         }
-                        else -> errorMessage = "$TAG Unknown error: ${e.message}"
+                        else -> "$TAG Unknown error: ${e.message}"
                     }
 
             }
