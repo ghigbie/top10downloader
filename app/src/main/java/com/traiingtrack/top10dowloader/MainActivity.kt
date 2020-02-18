@@ -38,15 +38,15 @@ class MainActivity : AppCompatActivity() {
             override fun doInBackground(vararg url: String?): String {
                 Log.d(TAG, "doInBackground called: starts with ${url[0]}")
                 val rssFeed = downloadXML(url[0])
-                if (rssFeed.isEmpty) {
+                if (rssFeed.isEmpty()) {
                     Log.e(TAG, "doInBackground: Error downloading")
                 }
                 return rssFeed
             }
         }
-    }
 
     private fun downloadXML(urlPath: String?): String {
+        val TAG = "downloadXML"
         val xmlResult = StringBuilder()
 
         try {
@@ -62,9 +62,9 @@ class MainActivity : AppCompatActivity() {
             val reader = BufferedReader(InputStreamReader(connection.inputStream))
             val inputBuffer = CharArray(500)
             var charsRead = 0
-            while(charsRead >= 0){
+            while (charsRead >= 0) {
                 charsRead = reader.read(inputBuffer)
-                if(charsRead > 0){
+                if (charsRead > 0) {
                     xmlResult.append(String(inputBuffer, 0, charsRead))
                 }
             }
@@ -76,6 +76,7 @@ class MainActivity : AppCompatActivity() {
             Log.e(TAG, "Unknown error: ${e.message}")
         }
     }
+}
 
 
 
