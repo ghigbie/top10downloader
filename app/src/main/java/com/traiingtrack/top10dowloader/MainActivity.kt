@@ -4,12 +4,6 @@ import android.os.AsyncTask
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import java.io.BufferedReader
-import java.io.IOException
-import java.io.InputStreamReader
-import java.lang.Exception
-import java.net.HttpURLConnection
-import java.net.MalformedURLException
 import java.net.URL
 
 class MainActivity : AppCompatActivity() {
@@ -33,11 +27,11 @@ class MainActivity : AppCompatActivity() {
 
             override fun onPostExecute(result: String?) {
                 super.onPostExecute(result)
-                Log.d(TAG, "onPostExecute called: paramete is $result")
+                Log.d(TAG, "onPostExecute: parameter is $result")
             }
 
             override fun doInBackground(vararg url: String?): String {
-                Log.d(TAG, "doInBackground called: starts with ${url[0]}")
+                Log.d(TAG, "doInBackground: starts with ${url[0]}")
                 val rssFeed = downloadXML(url[0])
                 if (rssFeed.isEmpty()) {
                     Log.e(TAG, "doInBackground: Error downloading")
@@ -46,16 +40,9 @@ class MainActivity : AppCompatActivity() {
             }
 
             private fun downloadXML(urlPath: String?): String {
-                val TAG = "downloadXML"
-                Log.d(TAG, "downloadXML called")
                 return URL(urlPath).readText()
             }
         }
+    }
 }
 
-
-
-
-
-
-}
