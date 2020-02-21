@@ -47,44 +47,8 @@ class MainActivity : AppCompatActivity() {
 
             private fun downloadXML(urlPath: String?): String {
                 val TAG = "downloadXML"
-                val xmlResult = StringBuilder()
-
-                try {
-                    val url = URL(urlPath)
-                    val connection: HttpURLConnection = url.openConnection() as HttpURLConnection
-                    val response = connection.responseCode
-                    Log.d(TAG, "downloadXML: The respose code was $response")
-
-                    connection.inputStream.buffered().reader().use { xmlResult.append(it.readText()) }
-
-                    Log.d(TAG, "Received ${xmlResult.length} bytes")
-                    return xmlResult.toString()
-
-
-//                } catch (e: MalformedURLException) {
-//                    Log.e(TAG, "downloadXML: Invalid URL ${e.message}")
-//                } catch (e: IOException) {
-//                    Log.e(TAG, "downloadXML: IO Exception reading data ${e.message}")
-//                } catch (e: SecurityException) {
-//                    Log.e(TAG, "downloadXML: Security exception...needs permission: ${e.message}")
-//                } catch (e: Exception) {
-//                    Log.e(TAG, "Unknown error: ${e.message}")
-//                }
-
-                }catch (e: Exception){
-                    val TAG = "downloadXML:"
-                    val errorMessage: String = when (e){
-                        is MalformedURLException -> "$TAG invalid URL ${e.message}"
-                        is IOException -> "$TAG IO Exception reading data ${e.message}"
-                        is SecurityException -> {
-                            e.printStackTrace()
-                           "$TAG Security Exception. Needs permission ${e.message}"
-                        }
-                        else -> "$TAG Unknown error: ${e.message}"
-                    }
-
-            }
-                return ""
+                Log.d(TAG, "downloadXML called")
+                return URL(urlPath).readText()
             }
         }
 }
